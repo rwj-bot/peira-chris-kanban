@@ -61,28 +61,28 @@
 
 ## Step 3: Deploy to Vercel (5 minutes)
 
+### Scenario A: First Deployment (No deployments exist yet)
+
 1. Go to [vercel.com/new](https://vercel.com/new)
 2. Click **"Continue with GitHub"**
 3. Authorize Vercel to access your GitHub
-4. Find and select `peira-chris-kanban` repository
+4. Find and select: `peira-chris-kanban` repository
 5. Click **"Import"**
 
 6. Configure:
-   - **Framework Preset:** Next.js
+   - **Framework Preset:** Next.js (auto-selected)
    - **Root Directory:** `./` (leave as is)
    - Click **"Continue"**
 
 7. Add Environment Variables (from Step 1):
-   - Name: `NEXT_PUBLIC_SUPABASE_URL`
+   - Click **"Environment Variables"** section (top of page, might need to scroll down)
+   - Look for **"NEXT_PUBLIC_SUPABASE_URL"** → Click **"Add New"**
    - Value: Your Project URL (starts with `https://`)
    - Click **"Add"**
 
-   - Name: `NEXT_PUBLIC_SUPABASE_ANON_KEY`
+   - Click **"Environment Variables"** again
+   - Look for **"NEXT_PUBLIC_SUPABASE_ANON_KEY"** → Click **"Add New"**
    - Value: Your anon public key (starts with `eyJ...`)
-   - **Important:** Under "Project API keys" in Supabase Settings, look for "anon public" key (NOT "service_role")
-   - Click the **eye/visibility icon** next to the key to copy the FULL value
-   - Paste into Vercel value field
-   - Select **Environment:** `all` (same as above)
    - Click **"Add"**
 
 8. Click **"Deploy"**
@@ -92,39 +92,42 @@
 
 ---
 
-## 🔧 Alternative: Deploy from Command Line
+### Scenario B: Deployment Exists — Update Environment Variables
 
-If Vercel UI is giving you trouble, use the **vercel skill** (CLI):
+If you see deployments listed (green boxes):
 
-```bash
-# First, install Vercel CLI (if not already installed)
-npm install -g vercel
-
-# Login to Vercel
-vercel login
-
-# Set the project directory
-cd /home/gc_jonesy/.openclaw/workspace/projects/peira-chris-kanban
-
-# Add environment variables
-vercel env add NEXT_PUBLIC_SUPABASE_URL "https://your-project.supabase.co" --production
-vercel env add NEXT_PUBLIC_SUPABASE_ANON_KEY "eyJ..." --production
-
-# Deploy
-vercel --prod
-```
+1. Click on your latest deployment (any green box)
+2. On the right side panel, click **"Environment Variables"** (gear icon, top of page)
+3. In the Environment Variables section:
+   - Find **"NEXT_PUBLIC_SUPABASE_ANON_KEY"** → Click **pencil icon** (edit)
+   - Replace the partial key with the full Supabase anon key
+   - Click **"Save"**
+4. Back to Deployments tab → Click **three dots (...)"** menu → **"Redeploy"**
+5. Wait 2-3 minutes for redeployment
 
 ---
 
-## 🔄 Redeploy After Fixing Environment Variables
+### Scenario C: Deployment Exists — Redeploy Button Not Working
 
-If you needed to fix the Supabase key after deployment:
+If Redeploy button is grayed out or clicking it does nothing:
 
-1. Go to your project in Vercel
-2. Click the **"Deployments"** tab
-3. Find the latest deployment
-4. Click the **three dots (...)** menu → **"Redeploy"**
-5. Wait 2-3 minutes for redeployment
+**Method 1: Via Deployments Tab**
+1. Go to **"Deployments"** tab (top of project page)
+2. Find your latest deployment
+3. Click **"three dots (...)"** menu (right side)
+4. Select **"Redeploy to Production"**
+
+**Method 2: Use Vercel CLI (Installed Skill)**
+1. Install Vercel CLI (already installed): `npm install -g vercel`
+2. Login: `vercel login`
+3. Set project directory:
+   ```bash
+   cd /home/gc_jonesy/.openclaw/workspace/projects/peira-chris-kanban
+   ```
+4. Deploy to production:
+   ```bash
+   vercel --prod
+   ```
 
 ---
 
@@ -140,7 +143,7 @@ If you needed to fix the Supabase key after deployment:
 
 ## Step 5: Optional - Custom Domain (10 minutes)
 
-If you want to use **clearlyunited.com** for Kanban:
+If you want to use **clearlyunited.com** for → Kanban:
 
 1. Buy Vercel will ask if you want to add a domain
 2. Or go to project **Settings** → **Domains**
@@ -157,8 +160,8 @@ If you want to use **clearlyunited.com** for Kanban:
 When you see this, you're live:
 
 - [x] Supabase project created
-- [ ] Schema SQL run successfully
-- [ ] Chris and Peira users created
+- [x] Schema SQL run successfully
+- [x] Chris and Peira users created
 - [x] GitHub repo created and pushed (public, ready for import)
 - [ ] Vercel deployed with env vars
 - [ ] Can create tasks at live URL
