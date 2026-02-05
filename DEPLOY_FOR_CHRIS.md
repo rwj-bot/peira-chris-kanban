@@ -79,12 +79,52 @@
 
    - Name: `NEXT_PUBLIC_SUPABASE_ANON_KEY`
    - Value: Your anon public key (starts with `eyJ...`)
+   - **Important:** Under "Project API keys" in Supabase Settings, look for "anon public" key (NOT "service_role")
+   - Click the **eye/visibility icon** next to the key to copy the FULL value
+   - Paste into Vercel value field
+   - Select **Environment:** `all` (same as above)
    - Click **"Add"**
 
 8. Click **"Deploy"**
 9. Wait 2-3 minutes for deployment
 
 10. **Success!** You'll see a live URL like: `https://peira-chris-kanban.vercel.app`
+
+---
+
+## 🔧 Alternative: Deploy from Command Line
+
+If Vercel UI is giving you trouble, use the **vercel skill** (CLI):
+
+```bash
+# First, install Vercel CLI (if not already installed)
+npm install -g vercel
+
+# Login to Vercel
+vercel login
+
+# Set the project directory
+cd /home/gc_jonesy/.openclaw/workspace/projects/peira-chris-kanban
+
+# Add environment variables
+vercel env add NEXT_PUBLIC_SUPABASE_URL "https://your-project.supabase.co" --production
+vercel env add NEXT_PUBLIC_SUPABASE_ANON_KEY "eyJ..." --production
+
+# Deploy
+vercel --prod
+```
+
+---
+
+## 🔄 Redeploy After Fixing Environment Variables
+
+If you needed to fix the Supabase key after deployment:
+
+1. Go to your project in Vercel
+2. Click the **"Deployments"** tab
+3. Find the latest deployment
+4. Click the **three dots (...)** menu → **"Redeploy"**
+5. Wait 2-3 minutes for redeployment
 
 ---
 
