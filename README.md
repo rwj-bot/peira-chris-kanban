@@ -1,230 +1,105 @@
-# Peira & Chris Kanban Board
+# Peira-Chris Kanban Board
 
-A modern, executive-level Kanban board for tracking tasks and delegating work. Built with Next.js 14+, TypeScript, Tailwind CSS, and Supabase.
+A custom Kanban board for Chris Jones and Peira (your Über Chief of Staff) to track tasks, delegate work, and stay organized.
+
+**Status:** ✅ Built — Ready for deployment
+**GitHub:** https://github.com/rwj-bot/peira-chris-kanban
+**Deployment Guide:** See `DEPLOY_FOR_CHRIS.md` (updated February 5, 2026)
+
+---
 
 ## Features
 
-- 📋 **Task Management**: Create, edit, and delete tasks with rich metadata
-- 🎯 **Priority Levels**: P1 (High), P2 (Medium), P3 (Low) with color-coded tags
-- 👥 **Assignees**: Assign tasks to Chris or Peira
-- 🏷️ **Tags**: Organize tasks by category (Unitus, Book, Product, Personal)
-- 🔄 **Drag & Drop**: Intuitive drag-and-drop interface between columns
-- ⚡ **Quick Add**: Create tasks in 3 seconds with the quick-add feature
-- 🌙 **Dark Mode**: Toggle between light and dark themes
-- 📱 **Mobile-First**: Responsive design that works on all devices
-- 🔄 **Real-Time Updates**: Automatic refresh when tasks change
-- 🔐 **Authentication**: Simple email/password authentication via Supabase
+- **Task Management:** Create, edit, delete, move tasks between columns
+- **Assignees:** Assign tasks to Chris or Peira
+- **Priorities:** P1 (red), P2 (yellow), P3 (green)
+- **Tags:** Unitus, Book, Product/App, Personal
+- **Status:** To Do, In Progress, Review, Done
+- **Real-time:** Live updates via Supabase subscriptions
+- **Mobile-first:** Responsive design optimized for phone/tablet
+- **Dark/Light Mode:** Toggle in top right
+- **Quick Add:** 3-second task creation from top bar
+
+---
 
 ## Tech Stack
 
-- **Frontend**: Next.js 14+ with TypeScript
-- **Styling**: Tailwind CSS
-- **Backend**: Supabase (PostgreSQL, Auth, Real-time)
-- **Drag & Drop**: @dnd-kit/core
-- **Deployment**: Vercel
+- **Frontend:** Next.js 16.1.6 + TypeScript + Tailwind CSS v4
+- **Backend:** Supabase (PostgreSQL database, Auth, Real-time subscriptions)
+- **Drag & Drop:** @dnd-kit for smooth card movement
+- **Deployment:** Vercel (auto-deploys from Git)
+- **Authentication:** Email/password (simple for now, upgradable to OAuth)
 
-## Prerequisites
+---
 
-- Node.js 18+ installed
-- A Supabase account (free tier works)
-- A Vercel account (for deployment)
+## Getting Started
 
-## Setup Instructions
+### Quick Start (10 minutes)
 
-### 1. Clone and Install
+1. **Set up Supabase** — Create project, run schema SQL, get credentials (5 minutes)
+   - See `DEPLOY_FOR_CHRIS.md` for detailed instructions
 
-```bash
-cd /path/to/your/projects
-git clone <repository-url>
-cd peira-chris-kanban
-npm install
-```
+2. **Create Users** — Create Chris and Peira accounts in Supabase Auth (2 minutes)
 
-### 2. Set Up Supabase
+3. **Deploy to Vercel** — Import GitHub repo, add environment variables, deploy (5 minutes)
 
-1. Go to [supabase.com](https://supabase.com) and create a new project
-2. Navigate to the SQL Editor in your Supabase dashboard
-3. Copy and execute the contents of `supabase/schema.sql`
-4. Get your Supabase credentials:
-   - Go to Project Settings → API
-   - Copy the **Project URL** and **anon public key**
+4. **Test It** — Open live URL, create tasks, drag between columns (2 minutes)
 
-### 3. Configure Environment Variables
+### First Time Setup
 
-1. Create a `.env.local` file in the root directory:
+If this is your first deployment, follow the complete guide in `DEPLOY_FOR_CHRIS.md`. Everything you need is there.
 
-```bash
-cp .env.example .env.local
-```
+### Already Have It Running?
 
-2. Edit `.env.local` with your Supabase credentials:
+- Open your live Vercel URL (you'll create it during deployment)
+- Log in with your Chris or Peira account
+- Start creating and managing tasks!
 
-```env
-NEXT_PUBLIC_SUPABASE_URL=https://your-project.supabase.co
-NEXT_PUBLIC_SUPABASE_ANON_KEY=your-anon-key-here
-```
-
-### 4. Run Locally
-
-```bash
-npm run dev
-```
-
-Open [http://localhost:3000](http://localhost:3000) in your browser.
-
-### 5. Set Up Authentication (Optional but Recommended)
-
-For a production app, you'll want to set up Supabase Auth:
-
-1. In Supabase Dashboard, go to **Authentication** → **Providers**
-2. Enable **Email** provider
-3. Configure email settings (SMTP or use Supabase's built-in email)
-4. Create user accounts for Chris and Peira in the **Users** section
-
-## Deploying to Vercel
-
-### Manual Deployment
-
-1. Push your code to GitHub
-2. Go to [vercel.com](https://vercel.com) and log in
-3. Click **"New Project"**
-4. Import your GitHub repository
-5. Add environment variables:
-   - `NEXT_PUBLIC_SUPABASE_URL`
-   - `NEXT_PUBLIC_SUPABASE_ANON_KEY`
-6. Click **Deploy**
-
-### Automatic Deployment (Recommended)
-
-1. Install Vercel CLI:
-
-```bash
-npm install -g vercel
-```
-
-2. Deploy:
-
-```bash
-vercel
-```
-
-Follow the prompts and add your environment variables when asked.
+---
 
 ## Usage
 
-### Creating a Task
+### Creating Tasks
 
-1. Click **"New Task"** for a detailed task form
-2. Or use the **Quick Add** bar for instant task creation
+1. Click **"New Task"** in the top bar
+2. Enter task title
+3. Optionally add description
+4. Select priority (P1/P2/P3)
+5. Select assignee (Chris/Peira)
+6. Select tags (optional)
+7. Click **"Create"**
 
-### Editing a Task
+### Managing Tasks
 
-1. Click the **"Edit"** button on any task card
-2. Modify the details as needed
-3. Click **"Update Task"** to save changes
+- **Drag and drop** tasks between columns (To Do, In Progress, Review, Done)
+- **Click task** to edit, delete, or change priority
+- **Filter** by assignee or priority (coming soon)
 
-### Moving Tasks
+### Real-time Collaboration
 
-1. Drag any task card to a different column
-2. The status will update automatically
+- When Chris creates a task, Peira sees it immediately (and vice versa)
+- No page refresh needed — live updates via Supabase subscriptions
 
-### Deleting a Task
+---
 
-1. Click the **"Delete"** button on any task card
-2. Confirm the deletion
+## Project Files
 
-### Dark Mode
+- `README.md` — This file
+- `DEPLOY_FOR_CHRIS.md` — Complete deployment guide
+- `DEPLOYMENT.md` — Original deployment documentation
+- `QUICK_START.md` — Quick 10-minute deployment summary
+- `SETUP_SUMMARY.md` — Project overview
+- `DELIVERY_SUMMARY.md` — Original delivery summary
+- `supabase/schema.sql` — Database schema
+- `.env.example` — Environment variable template
 
-Click the sun/moon icon in the top right corner to toggle between light and dark themes.
+---
 
-## Database Schema
+## Customization
 
-The `tasks` table has the following structure:
+Want to change colors, add features, or modify the workflow? This is your project! The code is clean, documented, and ready for you to extend.
 
-| Column | Type | Description |
-|--------|------|-------------|
-| id | UUID | Unique identifier (auto-generated) |
-| title | TEXT | Task title (required) |
-| description | TEXT | Task description (optional) |
-| assignee | TEXT | Assignee (Chris/Peira/null) |
-| priority | TEXT | Priority level (P1/P2/P3) |
-| tags | TEXT[] | Array of tags |
-| status | TEXT | Current status (To Do/In Progress/Review/Done) |
-| created_at | TIMESTAMP | Creation timestamp |
-| updated_at | TIMESTAMP | Last update timestamp |
+---
 
-## Development
-
-### Project Structure
-
-```
-peira-chris-kanban/
-├── src/
-│   ├── app/              # Next.js app directory
-│   ├── components/       # React components
-│   │   ├── KanbanBoard.tsx
-│   │   ├── KanbanColumn.tsx
-│   │   ├── TaskCard.tsx
-│   │   ├── TaskForm.tsx
-│   │   ├── QuickAddTask.tsx
-│   │   └── DarkModeToggle.tsx
-│   └── lib/              # Utility functions
-│       ├── supabase.ts   # Supabase client
-│       └── utils.ts      # Utility functions
-├── supabase/
-│   └── schema.sql        # Database schema
-├── .env.example          # Environment variables template
-└── README.md            # This file
-```
-
-### Available Scripts
-
-- `npm run dev` - Start development server
-- `npm run build` - Build for production
-- `npm start` - Start production server
-- `npm run lint` - Run ESLint
-
-## Admin Credentials (Testing)
-
-For initial testing, create test users in Supabase:
-
-1. Go to **Authentication** → **Users** in Supabase Dashboard
-2. Click **"Add User"** → **"Create New User"**
-3. Create users for Chris and Peira with temporary passwords
-4. Have them change passwords on first login
-
-## Custom Domain
-
-To connect a custom domain:
-
-1. In Vercel, go to **Settings** → **Domains**
-2. Add your domain (e.g., `kanban.yourdomain.com`)
-3. Follow the DNS instructions provided
-4. Wait for SSL certificate provisioning (usually 5-10 minutes)
-
-## Troubleshooting
-
-### Tasks not loading
-
-- Check your environment variables are set correctly
-- Verify Supabase project URL and anon key
-- Check browser console for errors
-
-### Real-time updates not working
-
-- Ensure Row Level Security (RLS) policies are set up correctly
-- Check Supabase Dashboard → **Realtime** to ensure subscriptions are enabled
-
-### Authentication issues
-
-- Verify Email provider is enabled in Supabase Auth settings
-- Check email delivery logs in Supabase Dashboard
-- Ensure RLS policies allow authenticated users
-
-## License
-
-MIT
-
-## Support
-
-For issues or questions, please contact the development team.
+**Built by:** Peira (Über Chief of Staff) 🦊
+**Date:** February 4-5, 2026

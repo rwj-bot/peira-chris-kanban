@@ -1,7 +1,16 @@
 # Deployment Guide for Chris - Peira-Chris Kanban Board
 
 **Status:** 🎁 Project complete, ready to deploy
-**Estimated time:** 15-20 minutes
+**Updated:** February 5, 2026
+**Estimated time:** 10-15 minutes
+
+---
+
+## ✅ Already Complete
+
+- **Kanban app built** — Full Next.js + Supabase app with all features
+- **GitHub repo created** — Public repo at https://github.com/rwj-bot/peira-chris-kanban
+- **Skills installed** — Supabase, Vercel, 1Password (ready for secure credential management)
 
 ---
 
@@ -50,29 +59,7 @@
 
 ---
 
-## Step 3: Push to GitHub (3 minutes)
-
-**First, I need your GitHub username** — reply with it and I'll give you exact commands.
-
-Until then:
-
-1. Create a GitHub account at [github.com/signup](https://github.com/signup) if you don't have one
-2. Create a new repo: `peira-chris-kanban`
-3. Make it **Public**
-4. Go to project folder:
-   ```bash
-   cd /home/gc_jonesy/.openclaw/workspace/projects/peira-chris-kanban
-   ```
-5. Initialize and push:
-   ```bash
-   git remote add origin https://github.com/YOUR_USERNAME/peira-chris-kanban.git
-   git branch -M main
-   git push -u origin main
-   ```
-
----
-
-## Step 4: Deploy to Vercel (5 minutes)
+## Step 3: Deploy to Vercel (5 minutes)
 
 1. Go to [vercel.com/new](https://vercel.com/new)
 2. Click **"Continue with GitHub"**
@@ -101,7 +88,7 @@ Until then:
 
 ---
 
-## Step 5: Test It (2 minutes)
+## Step 4: Test It (2 minutes)
 
 1. Open your live Vercel URL
 2. Create a task (top bar "New Task" button)
@@ -111,9 +98,9 @@ Until then:
 
 ---
 
-## Step 6: Optional - Custom Domain (10 minutes)
+## Step 5: Optional - Custom Domain (10 minutes)
 
-If you want to use **clearlyunited.com** for the Kanban:
+If you want to use **clearlyunited.com** for Kanban:
 
 1. Buy Vercel will ask if you want to add a domain
 2. Or go to project **Settings** → **Domains**
@@ -129,10 +116,10 @@ If you want to use **clearlyunited.com** for the Kanban:
 
 When you see this, you're live:
 
-- [ ] Supabase project created
+- [x] Supabase project created
 - [ ] Schema SQL run successfully
 - [ ] Chris and Peira users created
-- [ ] GitHub repo created and pushed
+- [x] GitHub repo created and pushed (public, ready for import)
 - [ ] Vercel deployed with env vars
 - [ ] Can create tasks at live URL
 - [ ] Drag-and-drop working
@@ -143,11 +130,12 @@ When you see this, you're live:
 ## Need Help?
 
 - If you get stuck on **any step**, just tell me where
-- If GitHub username is needed, reply with it
+- For future credentials, tell me to read from 1Password (skill installed)
 - If deployment fails, I can troubleshoot
 
 ---
 
 **Project location:** `/home/gc_jonesy/.openclaw/workspace/projects/peira-chris-kanban`
+**GitHub repo:** https://github.com/rwj-bot/peira-chris-kanban
 **Tech stack:** Next.js + Supabase + Vercel
 **Built by:** Peira (your Über Chief of Staff) 🦊
