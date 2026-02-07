@@ -26,6 +26,7 @@ export default function KanbanBoard() {
   const [editingTask, setEditingTask] = useState<Task | null>(null)
   const [showForm, setShowForm] = useState(false)
   const [loading, setLoading] = useState(true)
+  const [darkMode, setDarkMode] = useState(false)
 
   const sensors = useSensors(
     useSensor(PointerSensor, {
@@ -34,6 +35,29 @@ export default function KanbanBoard() {
       },
     })
   )
+
+  // Initialize dark mode from localStorage
+  useEffect(() => {
+    const savedMode = localStorage.getItem('darkMode')
+    const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches
+    const isDark = savedMode ? savedMode === 'true' : prefersDark
+    setDarkMode(isDark)
+    if (isDark) {
+      document.documentElement.classList.add('dark')
+    }
+  }, [])
+
+  // Toggle dark mode
+  const toggleDarkMode = () => {
+    setDarkMode(!darkMode)
+    if (!darkMode) {
+      document.documentElement.classList.add('dark')
+      localStorage.setItem('darkMode', 'true')
+    } else {
+      document.documentElement.classList.remove('dark')
+      localStorage.setItem('darkMode', 'false')
+    }
+  }
 
   useEffect(() => {
     fetchTasks()
@@ -48,11 +72,15 @@ export default function KanbanBoard() {
           schema: 'public',
           table: 'tasks',
         },
-        () => {
+        (payload) => {
+          console.log('Real-time update:', payload)
+          // Immediately fetch fresh data instead of waiting
           fetchTasks()
         }
       )
-      .subscribe()
+      .subscribe((status) => {
+        console.log('Subscription status:', status)
+      })
 
     return () => {
       supabase.removeChannel(channel)
@@ -101,6 +129,8 @@ export default function KanbanBoard() {
           .eq('id', taskId)
 
         if (error) throw error
+        // Fetch immediately after update to ensure UI is in sync
+        await fetchTasks()
       } catch (error) {
         console.error('Error updating task status:', error)
       }
@@ -125,6 +155,8 @@ export default function KanbanBoard() {
         .single()
 
       if (error) throw error
+      // Fetch immediately after insert
+      await fetchTasks()
     } catch (error) {
       console.error('Error creating task:', error)
     }
@@ -144,6 +176,8 @@ export default function KanbanBoard() {
 
       if (error) throw error
       setShowForm(false)
+      // Fetch immediately after insert
+      await fetchTasks()
     } catch (error) {
       console.error('Error creating task:', error)
     }
@@ -166,6 +200,8 @@ export default function KanbanBoard() {
       if (error) throw error
       setEditingTask(null)
       setShowForm(false)
+      // Fetch immediately after update
+      await fetchTasks()
     } catch (error) {
       console.error('Error updating task:', error)
     }
@@ -181,6 +217,8 @@ export default function KanbanBoard() {
         .eq('id', id)
 
       if (error) throw error
+      // Fetch immediately after delete
+      await fetchTasks()
     } catch (error) {
       console.error('Error deleting task:', error)
     }
@@ -206,7 +244,7 @@ export default function KanbanBoard() {
 
   if (loading) {
     return (
-      <div className="flex items-center justify-center min-h-screen">
+      <div className="flex items-center justify-center min-h-screen bg-gray-100 dark:bg-gray-950">
         <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600"></div>
       </div>
     )
@@ -217,10 +255,26 @@ export default function KanbanBoard() {
       <div className="max-w-7xl mx-auto">
         <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-8">
           <div>
-            <h1 className="text-3xl font-bold text-gray-900 dark:text-white">Kanban Board</h1>
+            <h1 className="text-3xl font-bold text-gray-900 dark:text-white">Mission Control</h1>
             <p className="text-gray-600 dark:text-gray-400 mt-1">Track tasks and delegate work</p>
           </div>
           <div className="flex gap-3">
+            {/* Dark Mode Toggle */}
+            <button
+              onClick={toggleDarkMode}
+              className="px-4 py-2 bg-gray-200 dark:bg-gray-800 hover:bg-gray-300 dark:hover:bg-gray-700 text-gray-900 dark:text-white font-medium rounded-lg transition-colors"
+              title={darkMode ? "Switch to Light Mode" : "Switch to Dark Mode"}
+            >
+              {darkMode ? (
+                <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z" />
+                </svg>
+              ) : (
+                <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z" />
+                </svg>
+              )}
+            </button>
             <button
               onClick={handleOpenForm}
               className="px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white font-medium rounded-lg transition-colors"
